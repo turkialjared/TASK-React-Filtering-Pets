@@ -1,9 +1,17 @@
+import { useState } from "react";
 import pets from "../petsData";
 import PetItem from "./PetItem";
+import petsData from "../petsData";
 
 function PetsList() {
-  const petList = pets.map((pet) => <PetItem pet={pet} key={pet.id} />);
+  const [query, setquery] = useState("");
+  const petList = pets
+    .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
+    .map((pet) => <PetItem pet={pet} key={pet.id} />);
 
+  const search = (e) => {
+    setquery(e.target.value);
+  };
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
@@ -15,6 +23,7 @@ function PetsList() {
               </h1>
               <div className="input-group rounded">
                 <input
+                  onChange={search}
                   type="search"
                   className="form-control rounded"
                   placeholder="Search"
