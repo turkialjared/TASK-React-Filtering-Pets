@@ -4,7 +4,10 @@ function PetItem({ pet }) {
   const [imageChange, setimageChange] = useState(pet.image);
 
   const change = () => {
-    setimageChange(pet.image2);
+    if (imageChange === pet.image) setimageChange(pet.image2);
+    else {
+      setimageChange(pet.image);
+    }
   };
 
   return (

@@ -2,16 +2,27 @@ import { useState } from "react";
 import pets from "../petsData";
 import PetItem from "./PetItem";
 import petsData from "../petsData";
+import { type } from "@testing-library/user-event/dist/type";
 
 function PetsList() {
   const [query, setquery] = useState("");
+  const [Type, setType] = useState("");
   const petList = pets
-    .filter((pet) => pet.name.toLowerCase().includes(query.toLowerCase()))
+    .filter(
+      (pet) =>
+        pet.name.toLowerCase().includes(query.toLowerCase()) &&
+        (Type === "" || pet.type === Type)
+    )
     .map((pet) => <PetItem pet={pet} key={pet.id} />);
 
   const search = (e) => {
     setquery(e.target.value);
   };
+
+  const search2 = (e) => {
+    setType(e.target.value);
+  };
+
   return (
     <section id="doctors" className="doctor-section pt-140">
       <div className="container">
@@ -33,7 +44,7 @@ function PetsList() {
               </div>
               <br />
               Type:
-              <select className="form-select">
+              <select className="form-select" onChange={search2}>
                 <option value="" selected>
                   All
                 </option>
